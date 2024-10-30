@@ -1,0 +1,85 @@
+@page "/meeting"
+@using CleanArchitecture.Frontend.Layout
+@using CleanArchitecture.Frontend.Components
+@inherits LayoutComponentBase
+
+<SectionContent SectionName="css">
+    <style>
+        .btn-delete-person {
+            cursor: pointer;
+        }
+
+        .body-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+    </style>
+</SectionContent>
+
+<BodyHeader Title="MEETING" />
+
+<div class="body-content p-2" style="margin-top: -70px">
+    <div class="row">
+        <div class="col-12 px-4 pt-4">
+            <div class="form-group">
+                <label for="keyword" class="mb-1">Masukkan Kode Booking</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Contoh: 012232323"
+                        name="kode_booking" value="">
+                    <div class="input-group-append">
+                        <button type="button" class="input-group-text bg-info text-white" id="search">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-12 px-4">
+            <div class="border rounded p-2 bg-white" id="searchResult">
+                <div class="px-3 py-4 text-center">Silahkan masukkan kode booking terlebih dahulu untuk
+                    mengetahui jadwal meeting</div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="formPengunjung" style="margin-bottom: 70px;">
+        <!-- load meeting-tamu.html -->
+    </div>
+</div>
+
+<MenuBar />
+
+<SectionContent SectionName="js">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#search').click(function () {
+                let keyword = $('input[name="kode_booking"]').val();
+
+                if (keyword == '') {
+                    alert('Masukkan kode booking terlebih dahulu');
+                    return;
+                }
+
+                $.ajax({
+                    url: 'meeting-result.html',
+                    beforeSend: function () {
+                        $('#search').html('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
+                        $('#search').attr('disabled', 'disabled');
+                        $('#formPengunjung').html('');
+                    },
+                    success: function (data) {
+                        $('#search').html('<i class="fa fa-search"></i>');
+                        $('#search').removeAttr('disabled');
+                        $('#searchResult').html(data);
+
+                        $('#code').text(keyword);
+
+                        $('#formPengunjung').load('meeting-tamu.html');
+                    }
+                });
+            })
+        });
+    </script>
+</SectionContent>

@@ -1,0 +1,14 @@
+CleanArchitecture/bin
+CleanArchitecture/obj
+CleanArchitecture.IntegrationTest/bin
+CleanArchitecture.IntegrationTest/obj
+CleanArchitecture.Unittest/bin
+CleanArchitecture.UI/bin
+CleanArchitecture.UI/obj
+CleanArchitecture.Frontend/bin
+CleanArchitecture.Frontend/obj
+CleanArchitecture.Unittest/obj
+CleanArchitecture/appsettings.Development.json
+CleanArchitecture/appsettings.json
+CleanArchitecture/appsettings.docker.json
+/obj

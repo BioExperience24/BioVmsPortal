@@ -1,0 +1,236 @@
+@page "/visitor"
+@using CleanArchitecture.Frontend.Layout
+@using CleanArchitecture.Frontend.Components
+@inherits LayoutComponentBase
+
+<SectionContent SectionName="css">
+    <style>
+        .body-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .form-label {
+            font-weight: 700;
+        }
+
+        #addPerson:hover {
+            background-color: #f5f5f5 !important;
+            color: #5f5f5f;
+            border: 1px solid #5f5f5f !important;
+            transition: all 0.3s ease;
+        }
+
+        .btn-delete-person {
+            cursor: pointer
+        }
+
+        .btn-delete-person:hover {
+            background-color: #f5f5f5 !important;
+            color: #5f5f5f;
+            border: 1px solid #5f5f5f !important;
+            transition: all 0.3s ease;
+        }
+
+        table tr td {
+            vertical-align: middle !important;
+            padding: 0.2rem !important;
+        }
+    </style>
+</SectionContent>
+
+<BodyHeader Title="VISITOR" />
+
+<div class="body-content p-2">
+    <div class="row" style="margin-bottom: 65px">
+        <div class="col-12 p-4">
+            <form action="" method="post">
+                <div class="form-group mb-3">
+                    <label class="form-label" for="namaPerusahaan">Nama Organisasi/Perusahaan</label>
+                    <input type="text" id="namaPerusahaan" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="tujuanLokasi">Tujuan Lokasi</label>
+                    <input type="text" id="tujuanLokasi" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="pic">PIC/Host</label>
+                    <input type="text" id="pic" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="agenda">Agenda</label>
+                    <input type="text" id="agenda" class="form-control" />
+                </div>
+                <div class="form-group mb-5">
+                    <label class="form-label" for="tanggal">Tanggal Kunjungan</label>
+                    <input type="date" id="tanggal" class="form-control" />
+                </div>
+                <div class="my-3 d-flex justify-content-between">
+                    <div class="h5 pt-1">
+                        <i class="fa fa-users"></i> Data Pengunjung <span class="badge bg-primary"
+                            id="totalPerson">0</span>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary btn-sm" id="addPerson">
+                            <i class="fa fa-plus"></i> Tambah
+                        </button>
+                    </div>
+                </div>
+                <div id="person" class="mb-3">
+                    <div class="card p-3 mb-5 border card-person">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="nama-0">Nama</label>
+                                    <input type="text" id="nama-0" name="nama[]" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="title-0">Title</label>
+                                    <select name="title[]" id="title-0" class="form-control">
+                                        <option value="Mr.">Mr.</option>
+                                        <option value="Ms.">Ms.</option>
+                                        <option value="Tuan">Tuan</option>
+                                        <option value="Ny.">Ny.</option>
+                                        <option value="Bapak">Bapak</option>
+                                        <option value="Ibu">Ibu</option>
+                                    </select>
+                                </div>
+
+                                <div style="position: absolute; right: -5px; top: -5px">
+                                    <span class="badge bg-danger btn-delete-person">
+                                        <i class="fa fa-times"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="identitas-0">KTP/NIK</label>
+                                    <input type="text" id="identitas-0" name="identitas[]" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="identitas-0">Email</label>
+                                    <input type="text" id="identitas-0" name="identitas[]" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="nomorPlat-0">Nomor Plat</label>
+                                    <input type="text" id="nomorPlat-0" name="nomorPlat[]" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="foto-0">Foto</label>
+                                    <input type="file" class="form-control" id="foto-0" name="foto[]" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" id="submit" class="btn btn-primary btn-block">
+                    <i class="fa fa-paper-plane"></i> Submit
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<MenuBar />
+
+<SectionContent SectionName="js">
+    <script type="text/javascript">
+        $('#addPerson').on('click', function () {
+            let formPerson = contentPerson();
+
+            $(formPerson).hide().prependTo('#person').fadeIn(); // Fade in effect when adding a person
+
+            initFunction();
+        });
+
+        function removePerson() {
+            $('.btn-delete-person').on('click', function () {
+                $(this).closest('.card').fadeOut(function () {
+                    $(this).remove();
+                    countPerson();
+                });
+            });
+        }
+
+        function contentPerson() {
+            let row = $('#person .card').length;
+
+            return `<div class="card p-3 mb-5 borde card-person">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="form-group mb-3">
+                    <label class="form-label" for="nama-${row}">Nama</label>
+                    <input type="text" id="nama-${row}" name="nama[]" class="form-control" />
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group mb-3">
+                    <label class="form-label" for="title-${row}">Title</label>
+                    <select name="title[]" id="title-${row}" class="form-control">
+                        <option value="Mr.">Mr.</option>
+                        <option value="Ms.">Ms.</option>
+                        <option value="Tuan">Tuan</option>
+                        <option value="Ny.">Ny.</option>
+                        <option value="Bapak">Bapak</option>
+                        <option value="Ibu">Ibu</option>
+                    </select>
+                </div>
+
+                <div style="position: absolute; right: -5px; top: -5px">
+                    <span class="badge bg-danger btn-delete-person">
+                        <i class="fa fa-times"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                    <label class="form-label" for="identitas-${row}">KTP/NIK</label>
+                    <input type="text" id="identitas-${row}" name="identitas[]" class="form-control" />
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                    <label class="form-label" for="nomorPlat-${row}">Nomor Plat</label>
+                    <input type="text" id="nomorPlat-${row}" name="nomorPlat[]" class="form-control" />
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                    <label class="form-label" for="foto-${row}">Foto</label>
+                    <input type="file" class="form-control" id="foto-${row}" name="foto[]" />
+                </div>
+            </div>
+        </div>
+    </div>`;
+        }
+
+        function countPerson() {
+            let total = $('#person .card').length;
+
+            $(`#totalPerson`).text(total);
+            
+            if (total == 0) {
+                $('#submit').prop('disabled', true);
+            } else {
+                $('#submit').prop('disabled', false);
+            }
+        }
+
+        function initFunction() {
+            countPerson();
+            removePerson();
+        }
+
+        initFunction();
+    </script>
+</SectionContent>
