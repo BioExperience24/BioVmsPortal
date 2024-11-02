@@ -26,6 +26,7 @@ public static class ConfigureServices
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUnitOfWorkNotToken, UnitOfWorkNotToken>();
         services.AddScoped<ApplicationDbContextInitializer>();
 
         return services;

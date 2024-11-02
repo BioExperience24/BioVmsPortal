@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CleanArchitecture.Infrastructure;
 
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWorkNotToken : IUnitOfWorkNotToken
 {
     private IDbContextTransaction? _transaction;
     private bool _disposed;
@@ -21,7 +21,7 @@ public class UnitOfWork : IUnitOfWork
 
     public IMediaRepository MediaRepository { get; }
 
-    public UnitOfWork(ApplicationDbContext dbContext)
+    public UnitOfWorkNotToken(ApplicationDbContext dbContext)
     {
         _context = dbContext;
         // repositories
@@ -33,7 +33,7 @@ public class UnitOfWork : IUnitOfWork
     // save changes
     public int SaveChanges() => _context.SaveChanges();
 
-    public async Task<int> SaveChangesAsync(CancellationToken token) => await _context.SaveChangesAsync(token);
+    public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();
 
     // transaction
     public void BeginTransaction()
@@ -60,7 +60,7 @@ public class UnitOfWork : IUnitOfWork
         }
     }
 
-    public async Task CommitAsync(CancellationToken token)
+    public async Task CommitAsync()
     {
         if (_transaction == null)
         {
@@ -69,7 +69,7 @@ public class UnitOfWork : IUnitOfWork
 
         try
         {
-            await _context.SaveChangesAsync(token);
+            await _context.SaveChangesAsync();
             _transaction.Commit();
         }
         finally
@@ -126,34 +126,34 @@ public class UnitOfWork : IUnitOfWork
     }
 
     // execute transaction
-    public async Task ExecuteTransactionAsync(Action action, CancellationToken token)
+    public async Task ExecuteTransactionAsync(Action action)
     {
         using var transaction = await _context.Database.BeginTransactionAsync();
         try
         {
             action();
-            await _context.SaveChangesAsync(token);
-            await transaction.CommitAsync(token);
+            await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
         }
         catch (Exception ex)
         {
-            await transaction.RollbackAsync(token);
+            await transaction.RollbackAsync();
             throw TransactionException.TransactionNotExecuteException(ex);
         }
     }
 
-    public async Task ExecuteTransactionAsync(Func<Task> action, CancellationToken token)
+    public async Task ExecuteTransactionAsync(Func<Task> action)
     {
         using var transaction = await _context.Database.BeginTransactionAsync();
         try
         {
             await action();
-            await _context.SaveChangesAsync(token);
-            await transaction.CommitAsync(token);
+            await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
         }
         catch (Exception ex)
         {
-            await transaction.RollbackAsync(token);
+            await transaction.RollbackAsync();
             throw TransactionException.TransactionNotExecuteException(ex);
         }
     }

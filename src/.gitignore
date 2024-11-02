@@ -7,8 +7,11 @@ CleanArchitecture.UI/bin
 CleanArchitecture.UI/obj
 CleanArchitecture.Frontend/bin
 CleanArchitecture.Frontend/obj
+CleanArchitecture.Frontend/UploadedFiles
 CleanArchitecture.Unittest/obj
 CleanArchitecture/appsettings.Development.json
 CleanArchitecture/appsettings.json
 CleanArchitecture/appsettings.docker.json
 /obj
+
+.fake
