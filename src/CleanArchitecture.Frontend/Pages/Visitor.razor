@@ -47,33 +47,33 @@
         <div class="col-12 p-4">
             <form action="" method="post">
                 <div class="form-group mb-3">
-                    <label class="form-label" for="namaPerusahaan">Nama Organisasi/Perusahaan</label>
-                    <input type="text" id="namaPerusahaan" class="form-control" />
+                    <label class="form-label" for="company">Company/Organization<span class="text-danger"> *</span></label>
+                    <input type="text" id="company" class="form-control" />
                 </div>
                 <div class="form-group mb-3">
-                    <label class="form-label" for="tujuanLokasi">Tujuan Lokasi</label>
-                    <input type="text" id="tujuanLokasi" class="form-control" />
+                    <label class="form-label" for="location">Location<span class="text-danger"> *</span></label>
+                    <input type="text" id="location" class="form-control" />
                 </div>
                 <div class="form-group mb-3">
-                    <label class="form-label" for="pic">PIC/Host</label>
+                    <label class="form-label" for="pic">PIC/Host<span class="text-danger"> *</span></label>
                     <input type="text" id="pic" class="form-control" />
                 </div>
                 <div class="form-group mb-3">
-                    <label class="form-label" for="agenda">Agenda</label>
+                    <label class="form-label" for="agenda">Agenda<span class="text-danger"> *</span></label>
                     <input type="text" id="agenda" class="form-control" />
                 </div>
                 <div class="form-group mb-5">
-                    <label class="form-label" for="tanggal">Tanggal Kunjungan</label>
-                    <input type="date" id="tanggal" class="form-control" />
+                    <label class="form-label" for="date">Visit Date<span class="text-danger"> *</span></label>
+                    <input type="date" id="date" class="form-control" />
                 </div>
                 <div class="my-3 d-flex justify-content-between">
                     <div class="h5 pt-1">
-                        <i class="fa fa-users"></i> Data Pengunjung <span class="badge bg-primary"
+                        <i class="fa fa-users"></i> List Visitor <span class="badge bg-primary"
                             id="totalPerson">0</span>
                     </div>
                     <div>
                         <button type="button" class="btn btn-primary btn-sm" id="addPerson">
-                            <i class="fa fa-plus"></i> Tambah
+                            <i class="fa fa-plus"></i> Add Visitor
                         </button>
                     </div>
                 </div>
@@ -82,13 +82,13 @@
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <div class="form-group mb-3">
-                                    <label class="form-label" for="nama-0">Nama</label>
-                                    <input type="text" id="nama-0" name="nama[]" class="form-control" />
+                                    <label class="form-label" for="name-0">Name<span class="text-danger"> *</span></label>
+                                    <input type="text" id="name-0" name="name[]" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group mb-3">
-                                    <label class="form-label" for="title-0">Title</label>
+                                    <label class="form-label" for="title-0">Title<span class="text-danger"> *</span></label>
                                     <select name="title[]" id="title-0" class="form-control">
                                         <option value="Mr.">Mr.</option>
                                         <option value="Ms.">Ms.</option>
@@ -107,26 +107,20 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group mb-3">
-                                    <label class="form-label" for="identitas-0">KTP/NIK</label>
-                                    <input type="text" id="identitas-0" name="identitas[]" class="form-control" />
+                                    <label class="form-label" for="identity-0">NIK / No Paspor<span class="text-danger"> *</span></label>
+                                    <input type="text" id="identity-0" name="identity[]" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group mb-3">
-                                    <label class="form-label" for="identitas-0">Email</label>
-                                    <input type="text" id="identitas-0" name="identitas[]" class="form-control" />
+                                    <label class="form-label" for="email-0">Email<span class="text-danger"> *</span></label>
+                                    <input type="text" id="email-0" name="email[]" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group mb-3">
-                                    <label class="form-label" for="nomorPlat-0">Nomor Plat</label>
-                                    <input type="text" id="nomorPlat-0" name="nomorPlat[]" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group mb-3">
-                                    <label class="form-label" for="foto-0">Foto</label>
-                                    <input type="file" class="form-control" id="foto-0" name="foto[]" />
+                                    <label class="form-label" for="plat-0">Plat Number</label>
+                                    <input type="text" id="plat-0" name="plat[]" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -169,13 +163,13 @@
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="form-group mb-3">
-                    <label class="form-label" for="nama-${row}">Nama</label>
-                    <input type="text" id="nama-${row}" name="nama[]" class="form-control" />
+                    <label class="form-label" for="name-${row}">Name<span class="text-danger"> *</span></label>
+                    <input type="text" id="name-${row}" name="name[]" class="form-control" />
                 </div>
             </div>
             <div class="col-12 col-md-6">
                 <div class="form-group mb-3">
-                    <label class="form-label" for="title-${row}">Title</label>
+                    <label class="form-label" for="title-${row}">Title<span class="text-danger"> *</span></label>
                     <select name="title[]" id="title-${row}" class="form-control">
                         <option value="Mr.">Mr.</option>
                         <option value="Ms.">Ms.</option>
@@ -194,20 +188,20 @@
             </div>
             <div class="col-12">
                 <div class="form-group mb-3">
-                    <label class="form-label" for="identitas-${row}">KTP/NIK</label>
-                    <input type="text" id="identitas-${row}" name="identitas[]" class="form-control" />
+                    <label class="form-label" for="identity-${row}">NIK/No Paspor<span class="text-danger"> *</span></label>
+                    <input type="text" id="identity-${row}" name="identity[]" class="form-control" />
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-group mb-3">
-                    <label class="form-label" for="nomorPlat-${row}">Nomor Plat</label>
-                    <input type="text" id="nomorPlat-${row}" name="nomorPlat[]" class="form-control" />
+                    <label class="form-label" for="email-${row}">Email<span class="text-danger"> *</span></label>
+                    <input type="text" id="email-${row}" name="email[]" class="form-control" />
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-group mb-3">
-                    <label class="form-label" for="foto-${row}">Foto</label>
-                    <input type="file" class="form-control" id="foto-${row}" name="foto[]" />
+                    <label class="form-label" for="plat-${row}">Plat Number</label>
+                    <input type="text" id="plat-${row}" name="plat[]" class="form-control" />
                 </div>
             </div>
         </div>
